@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+<!--    <link rel="stylesheet" href="../static/css/header.css">-->
+<!--    <link rel="stylesheet" href="../static/css/base.css">-->
+<!--    <link rel="stylesheet" th:href="@{/templates/header.css}">-->
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+    <main></main>
+
+    <script th:src="@{/js/header.js}"></script>
+
+</body>
+</html>

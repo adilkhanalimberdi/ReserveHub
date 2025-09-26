@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/bookings.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <title>My Bookings</title>
+</head>
+<body>
+
+    <div th:replace="~{fragments/header :: navbar}"></div>
+
+    <main>
+
+        <div id="wrapper">
+
+            <div id="ongoing">
+                <h4>Ongoing</h4>
+                <div class="no-bookings" th:if="${ongoing.size() == 0}">You don’t have any reservations yet.</div>
+
+                <div th:if="${ongoing.size() > 0}">
+
+                    <table class="container">
+                        <thead class="example">
+                        <tr>
+                            <th class="title">Title</th>
+                            <th class="start-time">Start time</th>
+                            <th class="end-time">End time</th>
+                            <th class="status">Status</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="booking : ${ongoing}">
+                        <tr class="booking-info">
+                            <td th:text="${booking.resource().name()}"
+                                class="title"></td>
+                            <td th:text="${#temporals.format(booking.startTime(), 'yyyy.MM.dd HH:mm')}"
+                                class="start-time"></td>
+                            <td th:text="${#temporals.format(booking.endTime(), 'yyyy.MM.dd HH:mm')}"
+                                class="end-time"></td>
+                            <td th:text="${booking.status()}"
+                                th:class="${booking.status().name().toLowerCase()}"
+                                th:classappend="status">
+                            </td>
+                            <td><div class="edit-button none">Edit</div></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="upcoming">
+                <h4>Upcoming</h4>
+                <div class="no-bookings" th:if="${upcoming.size() == 0}">You don’t have any reservations yet.</div>
+
+                <div th:if="${upcoming.size() > 0}">
+
+                    <table class="container">
+                        <thead class="example">
+                            <tr>
+                                <th class="title">Title</th>
+                                <th class="start-time">Start time</th>
+                                <th class="end-time">End time</th>
+                                <th class="status">Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody th:each="booking : ${upcoming}">
+                            <tr class="booking-info">
+                                <td th:text="${booking.resource().name()}" class="title"></td>
+                                <td th:text="${#temporals.format(booking.startTime(), 'yyyy.MM.dd HH:mm')}"
+                                    class="start-time"></td>
+                                <td th:text="${#temporals.format(booking.endTime(), 'yyyy.MM.dd HH:mm')}"
+                                    class="end-time"></td>
+                                <td th:text="${booking.status()}"
+                                    th:class="${booking.status().name().toLowerCase()}"
+                                    th:classappend="status">
+                                </td>
+                                <td th:if="${booking.status().name() == 'CONFIRMED'}"
+                                    class="td-button">
+                                    <form th:action="@{/delete/{id}(id=${booking.id()})}"
+                                        method="post"
+                                        id="deleteForm">
+                                        <input type="button"
+                                               th:value="Delete"
+                                               onclick="deleteButtonClicked()">
+                                    </form>
+                                </td>
+                                <td th:if="${booking.status().name() == 'PENDING'}"
+                                    class="td-button">
+                                    <form>
+                                        <input type="button"
+                                               th:value="Edit"
+                                               id="edit-button"
+                                               onclick="editButtonClicked(event)">
+                                    </form>
+
+                                    <div class="modal-window" id="editModal">
+                                        <div class="modal-container">
+                                            <form th:action="@{/bookings/update/{id}(id=${booking.id()})}" method="post">
+                                                <h3 id="modal-title"></h3>
+                                                <label for="modal-start-time">Start Time: </label>
+                                                <input id="modal-start-time"
+                                                       type="datetime-local"
+                                                       name="startTime">
+                                                <label for="modal-end-time">End Time: </label>
+                                                <input id="modal-end-time"
+                                                       type="datetime-local"
+                                                       name="endTime">
+                                                <button type="button" onclick="deleteButtonClicked(event)">Delete</button>
+                                                <button type="submit" class="modal-submit-button">Save</button>
+                                                <button type="button" class="modal-cancel-button" onclick="cancelButtonClicked()">&times;</button>
+                                            </form>
+
+                                            <form th:action="@{/delete/{id}(id=${booking.id()})}"
+                                                  method="post"
+                                                  id="delete-inside-edit-form">
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="archive">
+                <h4>Archive</h4>
+                <div class="no-archives" th:if="${archive.size() == 0}">You don’t have any archived bookings yet.</div>
+
+                <div th:if="${archive.size() > 0}">
+                    <table class="container">
+                        <thead class="example">
+                        <tr>
+                            <th class="title">Title</th>
+                            <th class="start-time">Start time</th>
+                            <th class="end-time">End time</th>
+                            <th class="status">Status</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="booking : ${archive}">
+                            <tr class="booking-info">
+                                <td th:text="${booking.resource().name()}"
+                                    class="title"></td>
+                                <td th:text="${#temporals.format(booking.startTime(), 'yyyy.MM.dd HH:mm')}"
+                                    class="start-time"></td>
+                                <td th:text="${#temporals.format(booking.endTime(), 'yyyy.MM.dd HH:mm')}"
+                                    class="end-time"></td>
+                                <td th:text="${booking.status()}"
+                                    th:class="${booking.status().name().toLowerCase()}"
+                                    th:classappend="status">
+                                </td>
+                                <td><div class="edit-button none">Edit</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script th:src="@{/js/header.js}"></script>
+    <script th:src="@{/js/bookings.js}"></script>
+
+</body>
+</html>

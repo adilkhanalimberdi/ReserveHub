@@ -1,0 +1,23 @@
+spring:
+    application:
+        name: ReserveHub
+    datasource:
+        url: ${DB_URL}
+        username: ${DB_USERNAME}
+        password: ${DB_PASSWORD}
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: update
+        open-in-view: true
+logging:
+    level:
+        org:
+            springframework:
+                security: DEBUG
+
+server:
+    port: 8080
+    error:
+        include-message: always
+        include-stacktrace: always

@@ -1,0 +1,195 @@
+main {
+    margin: auto;
+    /*border: 1px solid red;*/
+    height: 92%;
+    width: 70%;
+    color: var(--secondary-color);
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+
+    /*border: 1px solid blue;*/
+
+    gap: 20px;
+    padding-top: 10px;
+}
+
+#upcoming, #archive, #ongoing {
+    /*border: 1px solid red;*/
+    min-height: 80px;
+    background-color: #3d434e;
+    border-radius: 10px;
+}
+
+h4 {
+    padding: 10px;
+}
+
+.no-archives, .no-bookings {
+    text-align: center;
+    opacity: 0.8;
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+.container {
+    /*border: 1px solid red;*/
+    border-radius: 10px;
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+}
+
+tbody tr td:first-child {
+    /*background-color: #000;*/
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+tbody tr td:last-child {
+    /*background-color: #000;*/
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+td, th {
+    /*border: 1px solid red;*/
+    padding: 5px 15px;
+    & a {
+        text-decoration: none;
+        color: var(--secondary-color);
+    }
+}
+
+.example {
+    color: #92a3c1;
+    text-align: left;
+}
+
+td {
+    padding: 10px 15px;
+}
+
+.booking-info  {
+    /*border-radius: 10px;*/
+    /*border: 1px solid red;*/
+}
+
+.booking-info:hover {
+    background-color: #383d49;
+}
+
+
+.canceled {
+    color: #ff1f1f;
+}
+
+.pending {
+    color: #fdaf1f;
+}
+
+.confirmed {
+    color: #00cd00;
+}
+
+.title {
+    width: 28%;
+}
+
+.start-time, .end-time {
+    width: 25%;
+}
+
+.status {
+    width: 15%;
+}
+
+.edit-button {
+    cursor: pointer;
+
+    /*border: 1px solid red;*/
+    box-sizing: border-box;
+    border-radius: 5px;
+
+    width: max-content;
+
+    /*padding: 0 10px;*/
+}
+
+.delete-button {
+    cursor: pointer;
+
+    box-sizing: border-box;
+    border-radius: 5px;
+
+    width: max-content;
+}
+
+.modal-window {
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    inset: 0;
+
+    visibility: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 10000;
+}
+
+.modal-container {
+    height: 40%;
+    width: 30%;
+    min-width: 300px;
+    padding: 10px;
+    overflow-y: auto;
+    background: var(--primary-color);
+    border-radius: 8px;
+
+    position: relative;
+
+    z-index: 10000;
+}
+
+.modal-cancel-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    font-size: 22px;
+    box-sizing: border-box;
+
+    height: 30px;
+    width: 30px;
+    text-align: center;
+}
+
+.delete-button:hover {
+    color: red;
+}
+
+.td-button {
+    text-align: center;
+    /*border: 1px solid red;*/
+}
+
+.none {
+    display: none;
+}
+
+#edit-button {
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    font-size: 15px;
+}

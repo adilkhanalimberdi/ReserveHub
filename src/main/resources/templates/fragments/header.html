@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <title>Document</title>
+</head>
+<body>
+
+<div class="nav-bar" th:fragment="navbar">
+
+    <div id="close-zone" class="none"></div>
+
+    <div class="items">
+
+        <a class="item" th:href="@{/index}">Home</a>
+        <a class="item" th:href="@{/}">Book</a>
+        <a class="item" th:href="@{/bookings/my}">My Bookings</a>
+
+    </div>
+
+    <div id="profile">
+        <div id="profile-info" class="none">
+            <div class="info-wrapper">
+                <div class="picture"></div>
+
+                <div class="info">
+                    <a th:text="${name}" class="name" th:href="@{/profile}"></a>
+                    <p th:text="${email}" class="email"></p>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+
+                <a class="sign-out" th:href="@{/logout}">Sign out</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/header.js}"></script>
+
+</body>
+</html>

@@ -80,12 +80,10 @@
                                 </td>
                                 <td th:if="${booking.status().name() == 'CONFIRMED'}"
                                     class="td-button">
-                                    <form th:action="@{/delete/{id}(id=${booking.id()})}"
-                                        method="post"
-                                        id="deleteForm">
-                                        <input type="button"
-                                               th:value="Delete"
-                                               onclick="deleteButtonClicked()">
+                                    <form th:action="@{/bookings/cancel/{id}(id=${booking.id()})}" method="post">
+                                        <input type="submit"
+                                                th:value="Cancel"
+                                                id="cancel-button">
                                     </form>
                                 </td>
                                 <td th:if="${booking.status().name() == 'PENDING'}"
@@ -99,6 +97,10 @@
 
                                     <div class="modal-window" id="editModal">
                                         <div class="modal-container">
+                                            <div id="modal-cancel-button-container">
+                                                <button type="button" class="modal-cancel-button" onclick="cancelButtonClicked()">&times;</button>
+                                            </div>
+
                                             <form th:action="@{/bookings/update/{id}(id=${booking.id()})}" method="post">
                                                 <h3 id="modal-title"></h3>
                                                 <label for="modal-start-time">Start Time: </label>
@@ -109,19 +111,30 @@
                                                 <input id="modal-end-time"
                                                        type="datetime-local"
                                                        name="endTime">
-                                                <button type="button" onclick="deleteButtonClicked(event)">Delete</button>
-                                                <button type="submit" class="modal-submit-button">Save</button>
-                                                <button type="button" class="modal-cancel-button" onclick="cancelButtonClicked()">&times;</button>
+                                                <div id="modal-buttons">
+                                                    <button type="button" onclick="cancelBookingClicked(event)" class="modal-cancel-booking-button">Cancel</button>
+                                                    <div id="not-dangerous-buttons">
+                                                        <button type="submit" class="modal-submit-button">Save</button>
+                                                        <button type="button" onclick="confirmButtonClicked(event)">Confirm</button>
+                                                    </div>
+                                                </div>
                                             </form>
 
-                                            <form th:action="@{/delete/{id}(id=${booking.id()})}"
+                                            <form th:action="@{/bookings/cancel/{id}(id=${booking.id()})}"
                                                   method="post"
-                                                  id="delete-inside-edit-form">
+                                                  id="cancel-inside-edit-form">
+                                            </form>
+
+                                            <form th:action="@{/bookings/confirm/{id}(id=${booking.id()})}"
+                                                  method="post"
+                                                  id="confirm-inside-edit-form">
                                             </form>
                                         </div>
                                     </div>
 
                                 </td>
+
+                                <td th:if="${booking.status().name() == 'CANCELED'}"></td>
                             </tr>
                         </tbody>
                     </table>

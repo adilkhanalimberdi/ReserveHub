@@ -109,7 +109,7 @@ td {
     width: 15%;
 }
 
-.edit-button {
+#edit-button, #cancel-button {
     cursor: pointer;
 
     /*border: 1px solid red;*/
@@ -119,16 +119,19 @@ td {
     width: max-content;
 
     /*padding: 0 10px;*/
+
+    color: var(--secondary-color);
+    font-size: 15px;
+
+    background: none;
+    border: none;
 }
 
-.delete-button {
-    cursor: pointer;
-
-    box-sizing: border-box;
-    border-radius: 5px;
-
-    width: max-content;
+#cancel-button:hover {
+    color: red;
+    transition: 200ms;
 }
+
 
 .modal-window {
     background-color: rgba(0, 0, 0, 0.3);
@@ -147,10 +150,10 @@ td {
 }
 
 .modal-container {
-    height: 40%;
+    height: 26%;
     width: 30%;
     min-width: 300px;
-    padding: 10px;
+    padding: 10px 20px;
     overflow-y: auto;
     background: var(--primary-color);
     border-radius: 8px;
@@ -160,21 +163,83 @@ td {
     z-index: 10000;
 }
 
-.modal-cancel-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+.modal-container form {
+    display: flex;
+    flex-direction: column;
 
-    font-size: 22px;
-    box-sizing: border-box;
-
-    height: 30px;
-    width: 30px;
-    text-align: center;
+    /*border: 1px solid red;*/
 }
 
-.delete-button:hover {
+.modal-container form label {
+    text-align: left;
+}
+
+.modal-container form input {
+    margin-bottom: 15px;
+    padding: 6px 2px;
+    font-size: 15px;
+
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.modal-container form input:focus {
+    outline: none;
+    /*border: 1px solid rgb(0, 0, 0);*/
+}
+
+#modal-end-time {
+    /*border: 1px solid red;*/
+    margin-bottom: 30px;
+}
+
+.modal-container form h3 {
+}
+
+.modal-container form #modal-buttons {
+    /*position: absolute;*/
+    /*border: 1px solid red;*/
+
+    /*bottom: 20px;*/
+
+    display: flex;
+    justify-content: space-between;
+
+    height: 30px;
+
+    & button {
+        width: 60px;
+    }
+
+    & #not-dangerous-buttons {
+        height: 30px;
+        /*border: 1px solid red;*/
+
+        display: flex;
+    }
+}
+
+#modal-cancel-button-container {
+    height: 30px;
+    width: 100%;
+
+    display: flex;
+    justify-content: end;
+}
+
+#cancel-booking-button:hover {
+    background-color: red;
+}
+
+.modal-cancel-button {
+    height: 30px;
+    width: 30px;
+}
+
+.modal-cancel-booking-button:hover {
     color: red;
+    transition: color 200ms;
 }
 
 .td-button {
@@ -184,12 +249,4 @@ td {
 
 .none {
     display: none;
-}
-
-#edit-button {
-    background: none;
-    border: none;
-    color: var(--secondary-color);
-    cursor: pointer;
-    font-size: 15px;
 }

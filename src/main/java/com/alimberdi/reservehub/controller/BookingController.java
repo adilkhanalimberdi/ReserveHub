@@ -42,9 +42,9 @@ public class BookingController {
         List<BookingDTO> ongoing = new ArrayList<>();
 
         for (BookingDTO booking : bookings) {
-            if (now.isBefore(booking.startTime())) {
+            if (now.isBefore(booking.startTime()) && !booking.status().equals(BookingStatus.CANCELED)) {
                 upcoming.add(booking);
-            } else if (now.isAfter(booking.endTime())) {
+            } else if (now.isAfter(booking.endTime()) || booking.status().equals(BookingStatus.CANCELED)) {
                 archive.add(booking);
             } else {
                 ongoing.add(booking);
@@ -52,6 +52,7 @@ public class BookingController {
         }
 
         Collections.reverse(upcoming);
+        Collections.reverse(archive);
 
         model.addAttribute("upcoming", upcoming);
         model.addAttribute("archive", archive);
@@ -76,25 +77,39 @@ public class BookingController {
         return "redirect:/bookings/my";
     }
 
+    @PostMapping("/cancel/{id}")
+    public String cancelBooking(@PathVariable Long id) {
+        BookingDTO dto = bookingService.getBookingById(id);
+        BookingDTO newDto = new BookingDTO(
+                dto.id(),
+                dto.user(),
+                dto.resource(),
+                dto.startTime(),
+                dto.endTime(),
+                BookingStatus.CANCELED
+        );
+        bookingService.updateBooking(id, newDto);
+        return "redirect:/bookings/my";
+    }
+
     @PostMapping("/update/{id}")
     public String updateBooking(
             @PathVariable Long id,
             @RequestParam LocalDateTime startTime,
             @RequestParam LocalDateTime endTime
     ) {
-        BookingDTO dto = bookingService.getBookingById(id);
         LocalDateTime now = LocalDateTime.now();
 
-//        if (!now.isAfter(startTime) && startTime.isBefore(endTime)) {
+        if (!now.isAfter(startTime) && startTime.isBefore(endTime)) {
             bookingService.updateBooking(id, startTime, endTime);
-//        }
+        }
         return "redirect:/bookings/my";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteBooking(@PathVariable Long id) {
         bookingService.deleteBooking(id);
-        return "redirect:/my";
+        return "redirect:/bookings/my";
     }
 
 }

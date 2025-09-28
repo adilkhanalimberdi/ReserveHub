@@ -1,9 +1,11 @@
 const modalWindow = document.getElementById('editModal');
+let trow;
 
-function deleteButtonClicked(event) {
-    const form = document.getElementById('delete-inside-edit-form');
-    console.log(form);
-    const ok = confirm("Are you sure you want to delete?");
+
+function cancelBookingClicked(event) {
+    const form = document.getElementById('cancel-inside-edit-form');
+    // console.log(form);
+    const ok = confirm("Are you sure you want to cancel this booking?");
 
     if (ok) {
         form.submit();
@@ -49,14 +51,21 @@ function formatDateTime(date) {
 
 function editButtonClicked(event) {
     modalWindow.style.visibility = "visible";
+    trow = getData(event);
 
-    const trow = getData(event);
-
+    const title = document.getElementById('modal-title');
     const startTime = document.getElementById('modal-start-time');
     const endTime = document.getElementById('modal-end-time');
 
+    title.textContent = trow[0].firstChild.textContent;
     startTime.value = formatDateTime(new Date(trow[1].firstChild.textContent));
     endTime.value = formatDateTime(new Date(trow[2].firstChild.textContent));
+}
+
+
+function confirmButtonClicked(event) {
+    const form = document.getElementById('confirm-inside-edit-form');
+    form.submit();
 }
 
 
